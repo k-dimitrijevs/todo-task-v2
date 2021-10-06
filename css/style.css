@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@700&display=swap');
+
+body {
+    margin-top: 4rem;
+    background: rgb(50, 50, 50);
+    color: white;
+}
+
+h1 {
+    text-align: center;
+    font-size: 56px;
+    font-family: 'Rajdhani', sans-serif;
+    color: white;
+}
+
+h5, .deleteBtn {
+    margin-bottom: 1rem;
+}
+
+.todos {
+    margin-bottom: 5rem;
+}
+
+.create {
+    padding:1em;
+    text-align: center;
+    display:inline-block;
+    text-decoration: none !important;
+    margin:0 auto;
+
+    -webkit-transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    -ms-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+}
+
+.todo-list, .btnForm {
+    text-align: center;
+}
+
+.btnDelete {
+    margin-bottom: 1rem;
+}
+
