@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\Task;
 use App\Repositories\CsvTasksRepository;
+use App\Repositories\MysqlTasksRepository;
 use App\Repositories\TasksRepository;
 use Ramsey\Uuid\Uuid;
 
@@ -12,7 +13,7 @@ class TasksController
     private TasksRepository $tasksRepository;
     public function __construct()
     {
-        $this->tasksRepository = new CsvTasksRepository();
+        $this->tasksRepository = new MysqlTasksRepository();
     }
 
     public function index()
