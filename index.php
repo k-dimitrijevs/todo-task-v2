@@ -9,11 +9,13 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
     $r->addRoute('POST','/tasks', 'TasksController@store');
     $r->addRoute('POST','/tasks/{id}', 'TasksController@delete');
 
-    $r->addRoute('GET','/register', 'UsersController@registerView');
-    $r->addRoute('POST','/register', 'UsersController@register');
     $r->addRoute('GET','/login', 'UsersController@loginView');
     $r->addRoute('POST','/login', 'UsersController@login');
+    $r->addRoute('GET','/register', 'UsersController@registerView');
+    $r->addRoute('POST','/register', 'UsersController@register');
+    $r->addRoute('GET','/logout', 'UsersController@logout');
 
+    $r->addRoute('GET','/invalidRegister', 'UsersController@invalidRegisterView');
 });
 
 function base_path(): string

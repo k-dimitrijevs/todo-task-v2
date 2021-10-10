@@ -51,7 +51,7 @@ class MysqlUsersRepository implements UsersRepository
         
         if ($stmt->rowCount() > 0)
         {
-            $_SESSION['username'] = $_POST['username'];
+            $_SESSION['email'] = $_POST['email'];
             header('Location: /tasks');
         } else {
             header('Location: /login');

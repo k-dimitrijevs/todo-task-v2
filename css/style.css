@@ -29,6 +29,14 @@ h4 {
     font-family: 'Rajdhani', sans-serif;
 }
 
+.try-again {
+    padding:1em;
+    text-align: center;
+    display:inline-block;
+    text-decoration: none !important;
+    margin:0 auto;
+}
+
 h5, .deleteBtn {
     margin-bottom: 1rem;
 }

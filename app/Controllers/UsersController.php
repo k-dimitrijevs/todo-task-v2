@@ -23,21 +23,25 @@ class UsersController
 
     public function register(): void
     {
-        if ($_POST['password'] !== $_POST['password-confirm']) die('Password and Confirm password should match!');
+        if ($_POST['password'] !== $_POST['password-confirm']) {
+            header("Location: /invalidRegister");
 
-        $user = new User(
-            Uuid::uuid4(),
-            $_POST['email'],
-            $_POST['username']
-        );
+        } else {
+            $user = new User(
+                Uuid::uuid4(),
+                $_POST['email'],
+                $_POST['username']
+            );
 
-        $this->usersRepository->register($user);
-        header("Location: /tasks");
+            $this->usersRepository->register($user);
+            header("Location: /tasks");
+        }
     }
 
     public function logout(): void
     {
         $this->usersRepository->logout();
+        require_once "app/Views/users/registerView.template.php";
     }
 
     public function loginView(): void
@@ -48,5 +52,10 @@ class UsersController
     public function registerView(): void
     {
         require_once "app/Views/users/registerView.template.php";
+    }
+
+    public function invalidRegisterView(): void
+    {
+        require_once "app/Views/users/invalidRegister.template.php";
     }
 }
