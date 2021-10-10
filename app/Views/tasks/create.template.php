@@ -1,9 +1,9 @@
 <?php require_once 'app/Views/partials/header.template.php'; ?>
 <body>
     <div class="container">
+        <?php require_once 'app/Views/partials/user.template.php'; ?>
 
         <div class="row">
-            <?php require_once 'app/Views/partials/user.template.php'; ?>
             <h1>Add new task:</h1>
         </div>
         <div class="row">
