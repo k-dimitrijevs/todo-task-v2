@@ -26,26 +26,6 @@ class MysqlUsersRepository implements UsersRepository
         }
     }
 
-    public function getAllUsers(): UsersCollection
-    {
-        $statement = $this->connection->query("SELECT * FROM users");
-
-        $users = $statement->fetchAll(PDO::FETCH_ASSOC);
-        $collection = new UsersCollection();
-
-        foreach ($users as $user)
-        {
-            $collection->add(new User(
-                $user['id'],
-                $user['email'],
-                $user['username']
-            ));
-        }
-
-        return $collection;
-    }
-
-
     public function register(User $user): void
     {
         $sql = "INSERT INTO users (id, email, username, password) VALUES (:id, :email, :username, :password)";
