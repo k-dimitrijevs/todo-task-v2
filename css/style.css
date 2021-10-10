@@ -13,15 +13,35 @@ h1 {
     color: white;
 }
 
+h2 {
+    text-align: center;
+    margin-bottom: 3rem;
+    font-size: 56px;
+    font-family: 'Rajdhani', sans-serif;
+    color: white;
+}
+
+h3 {
+    font-family: 'Rajdhani', sans-serif;
+}
+
+h4 {
+    font-family: 'Rajdhani', sans-serif;
+}
+
 h5, .deleteBtn {
     margin-bottom: 1rem;
+}
+
+.have-acc {
+    margin-top: 4.5rem;
 }
 
 .todos {
     margin-bottom: 5rem;
 }
 
-.create {
+.create, .sign-in {
     padding:1em;
     text-align: center;
     display:inline-block;

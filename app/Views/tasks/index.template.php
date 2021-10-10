@@ -1,7 +1,10 @@
 <?php require_once 'app/Views/partials/header.template.php'; ?>
 <body>
+    <?php require_once 'app/Views/partials/user.template.php'; ?>
     <div class="container">
         <h1 class="center">Tasks:</h1>
+<!--        <p>--><?php //echo $user->getUsername() ?><!--</p>-->
+<!--        <p>--><?php //echo $user->getEmail() ?><!--</p>-->
         <div class="row todos">
             <a href="/tasks/create" class="btn btn-primary w-50 create">CREATE</a>
         </div>

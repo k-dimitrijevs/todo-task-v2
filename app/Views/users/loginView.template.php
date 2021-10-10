@@ -1,0 +1,27 @@
+<?php require_once 'app/Views/partials/header.template.php'; ?>
+<body>
+    <div class="container">
+        <h2>Hello!</h2>
+
+        <div class="row">
+            <div class="col-6">
+                <h3>Please enter your e-mail and password</h3>
+                <div class="form-group">
+                    <form action="/login" method="post">
+                        <label for="email" class="form-label">E-mail:</label>
+                        <input type="email" class="form-control w-50" name="email" placeholder="Enter your e-mail" required/><br>
+
+                        <label for="password" class="form-label">Password:</label>
+                        <input type="password" class="form-control w-50" name="password" placeholder="Enter your password" required/><br>
+
+                        <button type="submit" name="login" class="btn btn-primary">Sign in</button><br><br>
+                    </form>
+                </div>
+            </div>
+            <div class="col-6">
+                <h3 class="">New here?</h3>
+                <a href="/register"><h4 class="btn btn-primary">Click here to sign up!</h4></a>
+            </div>
+        </div>
+    </div>
+</body>

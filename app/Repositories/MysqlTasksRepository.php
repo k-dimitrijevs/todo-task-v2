@@ -13,10 +13,7 @@ class MysqlTasksRepository implements TasksRepository
 
     public function __construct()
     {
-        $host = '127.0.0.1';
-        $db = 'todo'; // insert db
-        $user = ''; // insert username
-        $pass = ''; // insert password
+        require_once "config.php";
 
         $dsn = "mysql:host=$host;dbname=$db;charset=UTF8";
         try

@@ -1,6 +1,9 @@
 <?php require_once 'app/Views/partials/header.template.php'; ?>
 <body>
+    <?php require_once 'app/Views/partials/user.template.php'; ?>
     <div class="container">
+<!--        <p>--><?php //echo $user->getUsername() ?><!--</p>-->
+<!--        <p>--><?php //echo $user->getEmail() ?><!--</p>-->
         <div class="row">
             <h1>Add new task:</h1>
         </div>
