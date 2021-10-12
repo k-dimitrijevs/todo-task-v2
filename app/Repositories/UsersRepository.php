@@ -10,4 +10,5 @@ interface UsersRepository
     public function register(User $user): void;
     public function login(): void;
     public function logout(): void;
+    public function getByEmail(string $email): ?User;
 }

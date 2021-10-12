@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Collections\UsersCollection;
 use App\Models\User;
+use App\Redirect;
 use PDO;
 use PDOException;
 
@@ -34,32 +35,45 @@ class MysqlUsersRepository implements UsersRepository
             ':id' => $user->getId(),
             ':email' => $user->getEmail(),
             ':username' => $user->getUsername(),
-            ':password' => md5($_POST['password'])
+            ':password' => $user->getPassword()
         ]);
     }
 
     public function login(): void
     {
-        $password = md5($_POST['password']);
 
-        $sql = "SELECT * FROM users WHERE email = :email AND password = :password";
-        $stmt = $this->connection->prepare($sql);
-        $stmt->execute([
-           'email' => $_POST['email'],
-           'password' => $password
-        ]);
-        
-        if ($stmt->rowCount() > 0)
+        $user = $this->getByEmail($_POST['email']);
+
+        if ($user !== null && password_verify($_POST['password'], $user->getPassword()))
         {
             $_SESSION['email'] = $_POST['email'];
-            header('Location: /tasks');
-        } else {
-            header('Location: /login');
+            Redirect::url('/tasks');
+            exit;
         }
+
+        Redirect::url('/login');
     }
 
     public function logout(): void
     {
         session_destroy();
+    }
+
+    public function getByEmail(string $email): ?User
+    {
+        $sql = "SELECT * FROM users WHERE email = ?";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute([$email]);
+
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (empty($user)) return null;
+
+        return new User(
+            $user['id'],
+            $user['email'],
+            $user['username'],
+            $user['password'],
+        );
     }
 }

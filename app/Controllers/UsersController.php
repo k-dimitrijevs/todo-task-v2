@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\User;
+use App\Redirect;
 use App\Repositories\MysqlUsersRepository;
 use App\Repositories\UsersRepository;
 use Ramsey\Uuid\Uuid;
@@ -24,17 +25,17 @@ class UsersController
     public function register(): void
     {
         if ($_POST['password'] !== $_POST['password-confirm']) {
-            header("Location: /invalidRegister");
-
+            Redirect::url('/invalidRegister');
         } else {
             $user = new User(
                 Uuid::uuid4(),
                 $_POST['email'],
-                $_POST['username']
+                $_POST['username'],
+                password_hash($_POST['password'], PASSWORD_DEFAULT)
             );
 
             $this->usersRepository->register($user);
-            header("Location: /tasks");
+            Redirect::url('/tasks');
         }
     }
 
