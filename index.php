@@ -16,6 +16,7 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
     $r->addRoute('GET','/logout', 'UsersController@logout');
 
     $r->addRoute('GET','/invalidRegister', 'UsersController@invalidRegisterView');
+    $r->addRoute('GET','/invalidEmail', 'UsersController@invalidEmailView');
 });
 
 function base_path(): string

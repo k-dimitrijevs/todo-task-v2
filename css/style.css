@@ -30,11 +30,11 @@ h4 {
 }
 
 .try-again {
-    padding:1em;
+    padding:0.4rem;
     text-align: center;
     display:inline-block;
     text-decoration: none !important;
-    margin:0 auto;
+    margin: 0 auto 2rem;
 }
 
 h5, .deleteBtn {
@@ -71,3 +71,6 @@ h5, .deleteBtn {
     margin-bottom: 1rem;
 }
 
+.errorView {
+    text-align: center;
+}

@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Auth;
 use App\Models\User;
 use App\Redirect;
 use App\Repositories\MysqlUsersRepository;
@@ -19,6 +20,8 @@ class UsersController
 
     public function login(): void
     {
+        if (Auth::loggedIn()) Redirect::url('/');
+        
         $this->usersRepository->login();
     }
 
@@ -26,7 +29,9 @@ class UsersController
     {
         if ($_POST['password'] !== $_POST['password-confirm']) {
             Redirect::url('/invalidRegister');
-        } else {
+        } elseif ($this->usersRepository->getByEmail($_POST['email']) > 0) {
+            Redirect::url('/invalidEmail');
+        }else {
             $user = new User(
                 Uuid::uuid4(),
                 $_POST['email'],
@@ -47,6 +52,8 @@ class UsersController
 
     public function loginView(): void
     {
+        if (Auth::loggedIn()) Redirect::url('/');
+
         require_once "app/Views/users/loginView.template.php";
     }
 
@@ -58,5 +65,10 @@ class UsersController
     public function invalidRegisterView(): void
     {
         require_once "app/Views/users/invalidRegister.template.php";
+    }
+
+    public function invalidEmailView(): void
+    {
+        require_once "app/Views/users/invalidEmail.template.php";
     }
 }
