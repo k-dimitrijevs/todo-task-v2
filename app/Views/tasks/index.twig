@@ -1,0 +1,32 @@
+{% extends "app.twig" %}
+
+{% block welcomeUser %}
+    <div class="container">
+        {% if session.email is defined %}
+            Hello, {{ session.username }}
+            <br>
+            {{ session.email }}
+            <br>
+            <a href='/logout' class='btn btn-warning w-10'>Logout</a><br>
+        {% else %}
+            <a href='/login' class='btn btn-warning w-10'>Sign in</a><br>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1 class="center">Tasks:</h1>
+        <div class="row todos">
+            <a href="/tasks/create" class="btn btn-primary w-50 create">CREATE</a>
+        </div>
+        <div class="row todo-list">
+            {% for task in tasks.tasks %}
+            <h5>{{ task.title }} {{ task.createdAt }}</h5>
+                <form method="post" action="/tasks/{{ task.id }}" class="btnForm">
+                    <button type="submit" class="btn btn-warning btnDelete">DELETE</button>
+                </form>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,8 +1,21 @@
-<?php require_once 'app/Views/partials/header.template.php'; ?>
-<body>
-    <div class="container">
-        <?php require_once 'app/Views/partials/user.template.php'; ?>
+{% extends "app.twig" %}
 
+{% block welcomeUser %}
+    <div class="container">
+        {% if session.email is defined %}
+            Hello, {{ session.username }}
+            <br>
+            {{ session.email }}
+            <br>
+            <a href='/logout' class='btn btn-warning w-10'>Logout</a><br>
+        {% else %}
+            <a href='/login' class='btn btn-warning w-10'>Sign in</a><br>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
         <div class="row">
             <h1>Add new task:</h1>
         </div>
@@ -17,5 +30,4 @@
         </div>
         <a href="/tasks" class="btn btn-primary">BACK</a>
     </div>
-</body>
-</html>
+{% endblock %}

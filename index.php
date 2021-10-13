@@ -1,22 +1,28 @@
 <?php
-session_start();
+
+use App\View;
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
 require 'vendor/autoload.php';
 
-$dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
+session_start();
+
+
+$dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) {
     $r->addRoute('GET', '/', 'TasksController@index');
-    $r->addRoute('GET','/tasks', 'TasksController@index');
-    $r->addRoute('GET','/tasks/create', 'TasksController@create');
-    $r->addRoute('POST','/tasks', 'TasksController@store');
-    $r->addRoute('POST','/tasks/{id}', 'TasksController@delete');
+    $r->addRoute('GET', '/tasks', 'TasksController@index');
+    $r->addRoute('GET', '/tasks/create', 'TasksController@create');
+    $r->addRoute('POST', '/tasks', 'TasksController@store');
+    $r->addRoute('POST', '/tasks/{id}', 'TasksController@delete');
 
-    $r->addRoute('GET','/login', 'UsersController@loginView');
-    $r->addRoute('POST','/login', 'UsersController@login');
-    $r->addRoute('GET','/register', 'UsersController@registerView');
-    $r->addRoute('POST','/register', 'UsersController@register');
-    $r->addRoute('GET','/logout', 'UsersController@logout');
+    $r->addRoute('GET', '/login', 'UsersController@loginView');
+    $r->addRoute('POST', '/login', 'UsersController@login');
+    $r->addRoute('GET', '/register', 'UsersController@registerView');
+    $r->addRoute('POST', '/register', 'UsersController@register');
+    $r->addRoute('GET', '/logout', 'UsersController@logout');
 
-    $r->addRoute('GET','/invalidRegister', 'UsersController@invalidRegisterView');
-    $r->addRoute('GET','/invalidEmail', 'UsersController@invalidEmailView');
+    $r->addRoute('GET', '/invalidRegister', 'UsersController@invalidRegisterView');
+    $r->addRoute('GET', '/invalidEmail', 'UsersController@invalidEmailView');
 });
 
 function base_path(): string
@@ -35,6 +41,11 @@ if (false !== $pos = strpos($uri, '?')) {
 $uri = rawurldecode($uri);
 
 $routeInfo = $dispatcher->dispatch($httpMethod, $uri);
+
+$loader = new FilesystemLoader(base_path() . '/app/Views');
+$templateEngine = new Environment($loader, []);
+$templateEngine->addGlobal('session', $_SESSION);
+
 switch ($routeInfo[0]) {
     case FastRoute\Dispatcher::NOT_FOUND:
         // ... 404 Not Found
@@ -51,6 +62,11 @@ switch ($routeInfo[0]) {
         [$controller, $method] = explode('@', $handler);
         $controller = 'App\Controllers\\' . $controller;
         $controller = new $controller();
-        $controller->$method($vars);
+        $response = $controller->$method($vars);
+
+        if($response instanceof View)
+        {
+            echo $templateEngine->render($response->getTemplate(), $response->getArgs());
+        }
         break;
 }

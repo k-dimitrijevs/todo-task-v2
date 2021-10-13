@@ -39,26 +39,6 @@ class MysqlUsersRepository implements UsersRepository
         ]);
     }
 
-    public function login(): void
-    {
-
-        $user = $this->getByEmail($_POST['email']);
-
-        if ($user !== null && password_verify($_POST['password'], $user->getPassword()))
-        {
-            $_SESSION['email'] = $_POST['email'];
-            Redirect::url('/tasks');
-            exit;
-        }
-
-        Redirect::url('/login');
-    }
-
-    public function logout(): void
-    {
-        session_destroy();
-    }
-
     public function getByEmail(string $email): ?User
     {
         $sql = "SELECT * FROM users WHERE email = ?";

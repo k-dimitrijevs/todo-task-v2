@@ -1,8 +1,8 @@
-<?php require_once 'app/Views/partials/header.template.php'; ?>
-<body>
+{% extends "app.twig" %}
+
+{% block content %}
     <div class="container">
         <h2>Hello!</h2>
-
         <div class="row">
             <div class="col-6">
                 <h3>Please enter your e-mail and password</h3>
@@ -24,4 +24,4 @@
             </div>
         </div>
     </div>
-</body>
+{% endblock %}

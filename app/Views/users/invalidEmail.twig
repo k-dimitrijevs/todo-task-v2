@@ -1,4 +1,5 @@
-<?php require_once 'app/Views/partials/header.template.php'; ?>
+{% extends "app.twig" %}
+{% block content %}
 <body>
 <div class="container">
     <div class="row">
@@ -9,4 +10,4 @@
         <a href="/login" class="btn btn-primary w-25 try-again">Sign in</a>
     </div>
 </div>
-</body>
+{% endblock %}

@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Redirect;
 use App\Repositories\MysqlUsersRepository;
 use App\Repositories\UsersRepository;
+use App\View;
 use Ramsey\Uuid\Uuid;
 
 class UsersController
@@ -21,12 +22,23 @@ class UsersController
     public function login(): void
     {
         if (Auth::loggedIn()) Redirect::url('/');
-        
-        $this->usersRepository->login();
+
+        $user = $this->usersRepository->getByEmail($_POST['email']);
+
+        if ($user !== null && password_verify($_POST['password'], $user->getPassword()))
+        {
+            $_SESSION['email'] = $user->getEmail();
+            $_SESSION['username'] = $user->getUsername();
+            Redirect::url('/tasks');
+            exit;
+        }
+
+        Redirect::url('/login');
     }
 
     public function register(): void
     {
+
         if ($_POST['password'] !== $_POST['password-confirm']) {
             Redirect::url('/invalidRegister');
         } elseif ($this->usersRepository->getByEmail($_POST['email']) > 0) {
@@ -44,31 +56,30 @@ class UsersController
         }
     }
 
-    public function logout(): void
+    public function logout(): View
     {
-        $this->usersRepository->logout();
-        require_once "app/Views/users/registerView.template.php";
+        session_destroy();
+        return new View('users/registerView.twig');
     }
 
-    public function loginView(): void
+    public function loginView(): View
     {
         if (Auth::loggedIn()) Redirect::url('/');
-
-        require_once "app/Views/users/loginView.template.php";
+        return new View('users/loginView.twig');
     }
 
-    public function registerView(): void
+    public function registerView(): View
     {
-        require_once "app/Views/users/registerView.template.php";
+        return new View('users/registerView.twig');
     }
 
-    public function invalidRegisterView(): void
+    public function invalidRegisterView(): View
     {
-        require_once "app/Views/users/invalidRegister.template.php";
+        return new View('users/invalidRegister.twig');
     }
 
-    public function invalidEmailView(): void
+    public function invalidEmailView(): View
     {
-        require_once "app/Views/users/invalidEmail.template.php";
+        return new View('users/invalidEmail.twig');
     }
 }

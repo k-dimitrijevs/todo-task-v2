@@ -3,28 +3,36 @@
 namespace App\Controllers;
 
 use App\Models\Task;
+use App\Redirect;
 use App\Repositories\CsvTasksRepository;
 use App\Repositories\MysqlTasksRepository;
 use App\Repositories\TasksRepository;
+use App\View;
 use Ramsey\Uuid\Uuid;
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
 
 class TasksController
 {
     private TasksRepository $tasksRepository;
+
     public function __construct()
     {
         $this->tasksRepository = new MysqlTasksRepository();
     }
 
-    public function index()
+    public function index(): View
     {
         $tasks = $this->tasksRepository->getAll();
-        require_once "app/Views/tasks/index.template.php";
+
+        return new View('tasks/index.twig', [
+            'tasks' => $tasks
+        ]);
     }
 
     public function create()
     {
-        require_once "app/Views/tasks/create.template.php";
+        return new View('tasks/create.twig');
     }
 
     public function store()
@@ -37,8 +45,8 @@ class TasksController
         );
 
         $this->tasksRepository->save($task);
-        
-        header("Location: /tasks");
+
+        Redirect::url('/tasks');
     }
 
     public function delete(array $vars)
@@ -52,7 +60,7 @@ class TasksController
             $this->tasksRepository->delete($task);
         }
 
-        header('Location: /');
+        Redirect::url('/');
     }
 
 }
