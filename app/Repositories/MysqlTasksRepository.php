@@ -75,4 +75,15 @@ class MysqlTasksRepository implements TasksRepository
         $stmt = $this->connection->prepare($sql);
         $stmt->execute([$task->getId()]);
     }
+
+    public function edit(Task $task): void
+    {
+        $sql = "UPDATE tasks SET title = ? WHERE id = ?";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute([
+            $_POST['title'],
+            $task->getId()
+        ]);
+    }
+
 }

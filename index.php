@@ -14,6 +14,9 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
     $r->addRoute('GET', '/tasks/create', 'TasksController@create');
     $r->addRoute('POST', '/tasks', 'TasksController@store');
     $r->addRoute('POST', '/tasks/{id}', 'TasksController@delete');
+    $r->addRoute('GET', '/tasks/{id}/edit', 'TasksController@editView');
+    $r->addRoute('POST', '/tasks/{id}/edit', 'TasksController@edit');
+
 
     $r->addRoute('GET', '/login', 'UsersController@loginView');
     $r->addRoute('POST', '/login', 'UsersController@login');

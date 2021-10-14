@@ -63,4 +63,27 @@ class TasksController
         Redirect::url('/');
     }
 
+    public function editView(array $vars): View
+    {
+        $id = $vars['id'] ?? null;
+        $tasks = $this->tasksRepository->getOne($id);
+
+        return new View('tasks/editView.twig', [
+            'tasks' => $tasks
+        ]);
+    }
+
+    public function edit(array $vars): void
+    {
+        $id = $vars['id'] ?? null;
+        if ($id == null) header('Location: /');
+        $task = $this->tasksRepository->getOne($id);
+        if ($task != null)
+        {
+            $this->tasksRepository->edit($task);
+        }
+
+        Redirect::url('/');
+    }
+
 }

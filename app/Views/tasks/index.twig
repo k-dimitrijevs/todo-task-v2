@@ -26,6 +26,11 @@
                 <form method="post" action="/tasks/{{ task.id }}" class="btnForm">
                     <button type="submit" class="btn btn-warning btnDelete">DELETE</button>
                 </form>
+                <form action=""></form>
+                <a href="/tasks/{{ task.id }}/edit">
+                    <button type="submit" class="btn btn-warning btnDelete">EDIT</button>
+                </a>
+
             {% endfor %}
         </div>
     </div>
